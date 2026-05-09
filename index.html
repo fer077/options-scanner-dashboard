@@ -268,9 +268,9 @@ const typeBadge  = t => {
 
 async function fetchData() {
   try {
-    const [latest, history] = await Promise.all([
-      fetch('/api/data/latest').then(r => r.json()),
-      fetch('/api/data/history?limit=20').then(r => r.json()),
+const [latest, history] = await Promise.all([
+      fetch('/api/data').then(r => r.json()),
+      fetch('/api/data').then(r => r.json()),
     ]);
 
     allData = latest.opportunities || [];
