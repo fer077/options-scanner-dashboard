@@ -339,8 +339,6 @@ function renderTable() {
   }
   empty.style.display = 'none';
 
-  const [badgeCls, badgeLbl] = (o) => typeBadge(o.type);
-
   tbody.innerHTML = filtered.map((o, i) => {
     const s = o.score;
     const sc = scoreColor(s);
