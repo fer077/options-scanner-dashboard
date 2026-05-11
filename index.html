@@ -9,9 +9,9 @@
   :root { --bg:#0d0f12; --bg2:#14181f; --bg3:#1c2230; --border:#252d3d; --text:#e2e8f0; --muted:#64748b; --green:#22c55e; --amber:#f59e0b; --red:#ef4444; --blue:#3b82f6; --accent:#06b6d4; --font:'SF Mono','Fira Code',monospace; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { background:var(--bg); color:var(--text); font-family:var(--font); font-size:13px; line-height:1.5; min-height:100vh; }
-  .hdr { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; border-bottom:1px solid var(--border); background:var(--bg2); position:sticky; top:0; z-index:10; }
+  .hdr { display:flex; align-items:center; justify-content:space-between; padding:14px 24px; border-bottom:1px solid var(--border); background:var(--bg2); position:sticky; top:0; z-index:10; }
   .hdr-title { font-size:15px; font-weight:600; letter-spacing:.05em; color:var(--accent); text-transform:uppercase; }
-  .hdr-right { display:flex; align-items:center; gap:16px; }
+  .hdr-right { display:flex; align-items:center; gap:14px; }
   .status-pill { display:flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; text-transform:uppercase; }
   .status-pill.on  { background:rgba(34,197,94,.15); color:var(--green); }
   .status-pill.off { background:rgba(239,68,68,.15); color:var(--red); }
@@ -20,6 +20,12 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
   .refresh-btn { background:none; border:1px solid var(--border); color:var(--muted); padding:4px 10px; border-radius:6px; cursor:pointer; font-family:var(--font); font-size:11px; }
   .refresh-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .tabs { display:flex; border-bottom:1px solid var(--border); background:var(--bg2); padding:0 24px; }
+  .tab { padding:10px 20px; font-size:12px; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all .15s; }
+  .tab:hover { color:var(--text); }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:600; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
   .metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:20px 24px; }
   .metric { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; }
   .metric-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px; }
@@ -47,6 +53,9 @@
   .badge-call   { background:rgba(59,130,246,.2); color:#60a5fa; }
   .badge-condor { background:rgba(6,182,212,.2);  color:#22d3ee; }
   .badge-spread { background:rgba(245,158,11,.2); color:#fbbf24; }
+  .risk-low    { background:rgba(34,197,94,.15);  color:#4ade80; }
+  .risk-medium { background:rgba(245,158,11,.15); color:#fbbf24; }
+  .risk-high   { background:rgba(239,68,68,.15);  color:#f87171; }
   .dte-chip { display:inline-flex; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:600; }
   .dte-hot { background:rgba(239,68,68,.15); color:#f87171; }
   .dte-mid { background:rgba(245,158,11,.15); color:#fbbf24; }
@@ -64,7 +73,29 @@
   .detail-val { font-weight:600; }
   .chart-wrap { position:relative; height:140px; }
   .empty { padding:48px; text-align:center; color:var(--muted); }
-  @media(max-width:900px) { .metrics{grid-template-columns:repeat(2,1fr)} .main{grid-template-columns:1fr} }
+  /* Portfolio */
+  .pf-layout { display:grid; grid-template-columns:300px 1fr; gap:16px; padding:16px 24px 24px; }
+  .pf-card { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px; }
+  .pf-card:last-child { margin-bottom:0; }
+  .pf-card-title { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; }
+  .pf-param { margin-bottom:12px; }
+  .pf-param:last-of-type { margin-bottom:14px; }
+  .pf-param-label { font-size:11px; color:var(--muted); margin-bottom:5px; }
+  .pf-param-row { display:flex; align-items:center; gap:8px; }
+  .pf-param-row input[type=range] { flex:1; }
+  .pf-val { font-size:12px; font-weight:700; color:var(--accent); min-width:64px; text-align:right; }
+  .pf-btn { width:100%; padding:10px; background:var(--accent); color:#0d0f12; border:none; border-radius:8px; font-family:var(--font); font-size:12px; font-weight:700; cursor:pointer; text-transform:uppercase; letter-spacing:.05em; transition:opacity .15s; }
+  .pf-btn:hover { opacity:.85; }
+  .pf-btn:disabled { opacity:.4; cursor:not-allowed; }
+  .pf-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+  .pf-metric { background:var(--bg3); border-radius:8px; padding:10px 12px; }
+  .pf-metric-label { font-size:10px; color:var(--muted); margin-bottom:4px; }
+  .pf-metric-val { font-size:18px; font-weight:700; }
+  .progress-wrap { margin-bottom:8px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-bottom:4px; }
+  .progress-track { height:6px; background:var(--border); border-radius:3px; overflow:hidden; }
+  .progress-fill { height:100%; border-radius:3px; transition:width .4s; }
+  @media(max-width:900px) { .metrics{grid-template-columns:repeat(2,1fr)} .main{grid-template-columns:1fr} .pf-layout{grid-template-columns:1fr} .pf-metrics{grid-template-columns:repeat(2,1fr)} }
 </style>
 </head>
 <body>
@@ -82,143 +113,246 @@
   </div>
 </div>
 
-<div class="metrics">
-  <div class="metric"><div class="metric-label">Oportunidades</div><div class="metric-val c-accent" id="m-count">—</div><div class="metric-sub">último scan</div></div>
-  <div class="metric"><div class="metric-label">Prima media</div><div class="metric-val c-green" id="m-prem">—</div><div class="metric-sub">objetivo $10–$20</div></div>
-  <div class="metric"><div class="metric-label">Delta medio</div><div class="metric-val c-amber" id="m-delta">—</div><div class="metric-sub">objetivo ≤ 0.10</div></div>
-  <div class="metric"><div class="metric-label">IV Rank medio</div><div class="metric-val c-blue" id="m-ivr">—</div><div class="metric-sub">objetivo ≥ 40%</div></div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('scanner',this)">Scanner de oportunidades</div>
+  <div class="tab" onclick="switchTab('portfolio',this)">Portfolio óptimo</div>
 </div>
 
-<div class="filters">
-  <div class="filter-group">
-    <span class="filter-label">Estrategia</span>
-    <select id="f-strat" onchange="renderTable()">
-      <option value="">Todas</option>
-      <option value="Put">Put</option>
-      <option value="Call">Call</option>
-      <option value="Condor">Condor</option>
-      <option value="Spread">Spread</option>
-    </select>
+<!-- TAB 1: SCANNER -->
+<div id="tab-scanner" class="tab-content active">
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Oportunidades</div><div class="metric-val c-accent" id="m-count">—</div><div class="metric-sub">último scan</div></div>
+    <div class="metric"><div class="metric-label">Prima media</div><div class="metric-val c-green" id="m-prem">—</div><div class="metric-sub">objetivo $10–$20</div></div>
+    <div class="metric"><div class="metric-label">Delta medio</div><div class="metric-val c-amber" id="m-delta">—</div><div class="metric-sub">objetivo ≤ 0.10</div></div>
+    <div class="metric"><div class="metric-label">IV Rank medio</div><div class="metric-val c-blue" id="m-ivr">—</div><div class="metric-sub">objetivo ≥ 40%</div></div>
   </div>
-  <div class="filter-group">
-    <span class="filter-label">DTE máx</span>
-    <input type="range" id="f-dte" min="1" max="21" value="21" step="1" oninput="document.getElementById('f-dte-v').textContent=this.value+'d';renderTable()">
-    <span class="range-val" id="f-dte-v">21d</span>
+  <div class="filters">
+    <div class="filter-group"><span class="filter-label">Estrategia</span>
+      <select id="f-strat" onchange="renderTable()"><option value="">Todas</option><option value="Put">Put</option><option value="Call">Call</option><option value="Condor">Condor</option><option value="Spread">Spread</option></select>
+    </div>
+    <div class="filter-group"><span class="filter-label">DTE máx</span>
+      <input type="range" id="f-dte" min="1" max="21" value="21" step="1" oninput="document.getElementById('f-dte-v').textContent=this.value+'d';renderTable()">
+      <span class="range-val" id="f-dte-v">21d</span>
+    </div>
+    <div class="filter-group"><span class="filter-label">Score mín</span>
+      <input type="range" id="f-score" min="0" max="100" value="60" step="5" oninput="document.getElementById('f-score-v').textContent=this.value;renderTable()">
+      <span class="range-val" id="f-score-v">60</span>
+    </div>
+    <div class="filter-group"><span class="filter-label">Delta máx</span>
+      <input type="range" id="f-delta" min="5" max="15" value="12" step="1" oninput="document.getElementById('f-delta-v').textContent='0.'+String(this.value).padStart(2,'0');renderTable()">
+      <span class="range-val" id="f-delta-v">0.12</span>
+    </div>
   </div>
-  <div class="filter-group">
-    <span class="filter-label">Score mín</span>
-    <input type="range" id="f-score" min="0" max="100" value="60" step="5" oninput="document.getElementById('f-score-v').textContent=this.value;renderTable()">
-    <span class="range-val" id="f-score-v">60</span>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Delta máx</span>
-    <input type="range" id="f-delta" min="5" max="15" value="12" step="1" oninput="document.getElementById('f-delta-v').textContent='0.'+String(this.value).padStart(2,'0');renderTable()">
-    <span class="range-val" id="f-delta-v">0.12</span>
+  <div class="main">
+    <div class="table-wrap">
+      <div class="table-hdr">
+        <span class="table-title" id="table-count">Cargando...</span>
+        <span style="font-size:10px;color:var(--muted)" id="scan-id">—</span>
+      </div>
+      <table>
+        <thead><tr><th>Score</th><th>Ticker</th><th>Tipo</th><th>Strike · Exp</th><th>DTE</th><th>Prima</th><th>Delta</th><th>IV Rank</th><th>Spread</th><th>Theta/d</th></tr></thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+      <div id="empty-state" class="empty" style="display:none"><div style="font-size:32px;margin-bottom:8px">◌</div><div>Sin oportunidades con los filtros actuales</div></div>
+    </div>
+    <div class="side">
+      <div class="panel"><div class="panel-title">Detalle</div><div id="detail-content" style="color:var(--muted);font-size:11px;text-align:center;padding:16px 0">Selecciona una fila</div></div>
+      <div class="panel"><div class="panel-title">Historial</div><div class="chart-wrap"><canvas id="hist-chart" role="img" aria-label="Historial scans"></canvas></div></div>
+    </div>
   </div>
 </div>
 
-<div class="main">
-  <div class="table-wrap">
-    <div class="table-hdr">
-      <span class="table-title" id="table-count">Cargando...</span>
-      <span style="font-size:10px;color:var(--muted)" id="scan-id">—</span>
+<!-- TAB 2: PORTFOLIO OPTIMIZER -->
+<div id="tab-portfolio" class="tab-content">
+  <div class="pf-layout">
+
+    <!-- Controles -->
+    <div>
+      <div class="pf-card">
+        <div class="pf-card-title">Parámetros del portfolio</div>
+
+        <div class="pf-param">
+          <div class="pf-param-label">Retorno objetivo (primas capturadas)</div>
+          <div class="pf-param-row">
+            <input type="range" id="pf-target" min="50" max="1000" value="200" step="25" oninput="updatePfLabels()">
+            <span class="pf-val" id="pf-target-v">$200</span>
+          </div>
+        </div>
+
+        <div class="pf-param">
+          <div class="pf-param-label">Margen máximo comprometido</div>
+          <div class="pf-param-row">
+            <input type="range" id="pf-margin" min="2000" max="50000" value="15000" step="500" oninput="updatePfLabels()">
+            <span class="pf-val" id="pf-margin-v">$15,000</span>
+          </div>
+        </div>
+
+        <div class="pf-param">
+          <div class="pf-param-label">Horizonte temporal (DTE máx)</div>
+          <div class="pf-param-row">
+            <input type="range" id="pf-dte" min="1" max="21" value="10" step="1" oninput="updatePfLabels()">
+            <span class="pf-val" id="pf-dte-v">10d</span>
+          </div>
+        </div>
+
+        <div class="pf-param">
+          <div class="pf-param-label">Delta máximo por posición</div>
+          <div class="pf-param-row">
+            <input type="range" id="pf-delta" min="3" max="15" value="10" step="1" oninput="updatePfLabels()">
+            <span class="pf-val" id="pf-delta-v">0.10</span>
+          </div>
+        </div>
+
+        <div class="pf-param">
+          <div class="pf-param-label">Máximo de posiciones simultáneas</div>
+          <div class="pf-param-row">
+            <input type="range" id="pf-maxpos" min="1" max="15" value="8" step="1" oninput="updatePfLabels()">
+            <span class="pf-val" id="pf-maxpos-v">8</span>
+          </div>
+        </div>
+
+        <div class="pf-param">
+          <div class="pf-param-label">Prioridad de selección</div>
+          <select id="pf-priority" style="width:100%;margin-top:2px">
+            <option value="risk">Menor riesgo (delta más bajo)</option>
+            <option value="score">Mayor score compuesto</option>
+            <option value="return">Mayor retorno sobre margen</option>
+            <option value="theta">Mayor theta diario</option>
+          </select>
+        </div>
+
+        <button class="pf-btn" onclick="optimizePortfolio()" id="pf-btn">Optimizar portfolio</button>
+      </div>
+
+      <div class="pf-card">
+        <div class="pf-card-title">Criterios aplicados</div>
+        <div style="font-size:11px;color:var(--muted);line-height:2">
+          <div>1. Filtra por DTE y delta máximos</div>
+          <div>2. Ordena por prioridad elegida</div>
+          <div>3. Añade posiciones hasta el objetivo</div>
+          <div>4. Respeta margen y nº de posiciones</div>
+          <div>5. Un subyacente distinto por posición</div>
+        </div>
+      </div>
     </div>
-    <table>
-      <thead><tr><th>Score</th><th>Ticker</th><th>Tipo</th><th>Strike · Exp</th><th>DTE</th><th>Prima</th><th>Delta</th><th>IV Rank</th><th>Spread</th><th>Theta/d</th></tr></thead>
-      <tbody id="tbl-body"></tbody>
-    </table>
-    <div id="empty-state" class="empty" style="display:none">
-      <div style="font-size:32px;margin-bottom:8px">◌</div>
-      <div>Sin oportunidades con los filtros actuales</div>
-    </div>
-  </div>
-  <div class="side">
-    <div class="panel">
-      <div class="panel-title">Detalle</div>
-      <div id="detail-content" style="color:var(--muted);font-size:11px;text-align:center;padding:16px 0">Selecciona una fila</div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">Historial</div>
-      <div class="chart-wrap"><canvas id="hist-chart" role="img" aria-label="Historial scans"></canvas></div>
+
+    <!-- Resultados -->
+    <div>
+      <div id="pf-empty" style="padding:80px 0;text-align:center;color:var(--muted)">
+        <div style="font-size:40px;margin-bottom:12px">◎</div>
+        <div>Ajusta los parámetros y pulsa Optimizar</div>
+      </div>
+
+      <div id="pf-results" style="display:none">
+        <div class="pf-metrics">
+          <div class="pf-metric"><div class="pf-metric-label">Prima total</div><div class="pf-metric-val c-green" id="pf-r-prem">—</div></div>
+          <div class="pf-metric"><div class="pf-metric-label">Margen usado</div><div class="pf-metric-val c-amber" id="pf-r-margin">—</div></div>
+          <div class="pf-metric"><div class="pf-metric-label">Retorno s/ margen</div><div class="pf-metric-val c-accent" id="pf-r-ret">—</div></div>
+          <div class="pf-metric"><div class="pf-metric-label">Delta medio</div><div class="pf-metric-val c-blue" id="pf-r-delta">—</div></div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Retorno objetivo</span><span id="pf-prog-prem-txt">$0 / $200</span></div>
+            <div class="progress-track"><div class="progress-fill" id="pf-prog-prem" style="width:0%;background:var(--green)"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Margen comprometido</span><span id="pf-prog-margin-txt">$0 / $15,000</span></div>
+            <div class="progress-track"><div class="progress-fill" id="pf-prog-margin" style="width:0%;background:var(--amber)"></div></div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <div class="table-hdr">
+            <span class="table-title" id="pf-pos-count">0 posiciones</span>
+            <span style="font-size:11px;font-weight:600" id="pf-status-msg"></span>
+          </div>
+          <table>
+            <thead><tr><th>#</th><th>Ticker</th><th>Tipo</th><th>Strike · Exp</th><th>DTE</th><th>Prima</th><th>Delta</th><th>Margen</th><th>Ret%</th><th>Score</th><th>Riesgo</th></tr></thead>
+            <tbody id="pf-tbl-body"></tbody>
+          </table>
+        </div>
+
+        <div id="pf-mgmt-note" style="margin-top:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:11px;color:var(--muted);line-height:2"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
+var SUPABASE_URL = 'https://thkxgbgkbqjuefsqjkns.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoa3hnYmdrYnFqdWVmc3Fqa25zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNTU3MjksImV4cCI6MjA5MzkzMTcyOX0.aqfnY1Cig-AuKxdmj37ba-aplsyblR0VtONFOCfDiSE';
+
 var allData = [];
 var histChart = null;
 var countdown = 30;
-var countdownTimer = null;
 
-function scoreColor(s) { return s>=80?'#22c55e':s>=65?'#f59e0b':'#ef4444'; }
-function dteCls(d) { return d<=7?'dte-hot':d<=14?'dte-mid':'dte-cool'; }
-function typeBadge(t) {
-  if (!t) return ['badge-spread','N/A'];
-  if (t==='P'||t.indexOf('Put')>=0)    return ['badge-put','Put'];
-  if (t==='C'||t.indexOf('Call')>=0)   return ['badge-call','Call'];
-  if (t.indexOf('Condor')>=0)          return ['badge-condor','Condor'];
+function supabaseFetch(path) {
+  return fetch(SUPABASE_URL+'/rest/v1/'+path,{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}).then(function(r){return r.json();});
+}
+
+function switchTab(name,el) {
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+function scoreColor(s){return s>=80?'#22c55e':s>=65?'#f59e0b':'#ef4444';}
+function dteCls(d){return d<=7?'dte-hot':d<=14?'dte-mid':'dte-cool';}
+function typeBadge(t){
+  if(!t) return ['badge-spread','N/A'];
+  if(t==='P'||t.indexOf('Put')>=0)  return ['badge-put','Put'];
+  if(t==='C'||t.indexOf('Call')>=0) return ['badge-call','Call'];
+  if(t.indexOf('Condor')>=0)        return ['badge-condor','Condor'];
   return ['badge-spread','Spread'];
 }
 
 function fetchData() {
-  fetch('/api/data')
-    .then(function(r){ return r.json(); })
-    .then(function(data) {
-      allData = data.opportunities || [];
-
-      var active = data.status && data.status.active;
-      document.getElementById('status-pill').className = 'status-pill '+(active?'on':'off');
-      document.getElementById('status-dot').className  = 'dot'+(active?' pulse':'');
-      document.getElementById('status-text').textContent = active?'Scanner activo':'Scanner detenido';
-
-      var ts = data.timestamp;
-      document.getElementById('last-update').textContent = ts ? 'Último: '+ts.substring(0,16).replace('T',' ') : '—';
-      document.getElementById('scan-id').textContent = data.scan_id || '';
-
-      if (allData.length > 0) {
-        var n=allData.length, sp=0, sd=0, si=0;
-        for(var i=0;i<n;i++){ sp+=allData[i].premium||0; sd+=allData[i].delta||0; si+=allData[i].iv_rank||0; }
-        document.getElementById('m-count').textContent = n;
-        document.getElementById('m-prem').textContent  = '$'+(sp/n).toFixed(1);
-        document.getElementById('m-delta').textContent = (sd/n).toFixed(2);
-        document.getElementById('m-ivr').textContent   = Math.round(si/n)+'%';
+  supabaseFetch('scans?select=scan_id,created_at,opportunities,meta&order=created_at.desc&limit=1')
+    .then(function(rows){
+      if(!rows||!rows.length){document.getElementById('status-text').textContent='Sin datos';return;}
+      var row=rows[0];
+      allData=row.opportunities||[];
+      var ts=row.created_at;
+      var active=(Date.now()-new Date(ts).getTime())/60000<15;
+      document.getElementById('status-pill').className='status-pill '+(active?'on':'off');
+      document.getElementById('status-dot').className='dot'+(active?' pulse':'');
+      document.getElementById('status-text').textContent=active?'Scanner activo':'Scanner detenido';
+      document.getElementById('last-update').textContent=ts?'Último: '+ts.substring(0,16).replace('T',' '):'—';
+      document.getElementById('scan-id').textContent=row.scan_id||'';
+      if(allData.length>0){
+        var n=allData.length,sp=0,sd=0,si=0;
+        for(var i=0;i<n;i++){sp+=allData[i].premium||0;sd+=allData[i].delta||0;si+=allData[i].iv_rank||0;}
+        document.getElementById('m-count').textContent=n;
+        document.getElementById('m-prem').textContent='$'+(sp/n).toFixed(1);
+        document.getElementById('m-delta').textContent=(sd/n).toFixed(2);
+        document.getElementById('m-ivr').textContent=Math.round(si/n)+'%';
       } else {
-        ['m-count','m-prem','m-delta','m-ivr'].forEach(function(id){ document.getElementById(id).textContent='—'; });
+        ['m-count','m-prem','m-delta','m-ivr'].forEach(function(id){document.getElementById(id).textContent='—';});
       }
-
       renderTable();
-      countdown = 30;
-    })
-    .catch(function() {
-      document.getElementById('status-text').textContent = 'Error de conexión';
-    });
+      countdown=30;
+    }).catch(function(e){document.getElementById('status-text').textContent='Error: '+e.message;});
+
+  supabaseFetch('scans?select=scan_id,created_at,meta&order=created_at.desc&limit=20')
+    .then(function(rows){if(!rows||!rows.length)return;rows.reverse();renderChart(rows);}).catch(function(){});
 }
 
 function renderTable() {
-  var strat    = document.getElementById('f-strat').value;
-  var maxDte   = parseInt(document.getElementById('f-dte').value);
-  var minScore = parseInt(document.getElementById('f-score').value);
-  var maxDelta = parseInt(document.getElementById('f-delta').value)/100;
-
-  var filtered = allData.filter(function(o) {
-    var stratOk = !strat||(o.strategy&&o.strategy.indexOf(strat)>=0);
-    return stratOk && o.dte<=maxDte && o.score>=minScore && o.delta<=maxDelta;
-  });
-  filtered.sort(function(a,b){ return b.score-a.score; });
-
-  document.getElementById('table-count').textContent = filtered.length+' oportunidad'+(filtered.length!==1?'es':'');
-  window._filtered = filtered;
-
-  if (filtered.length===0) {
-    document.getElementById('tbl-body').innerHTML='';
-    document.getElementById('empty-state').style.display='';
-    return;
-  }
+  var strat=document.getElementById('f-strat').value;
+  var maxDte=parseInt(document.getElementById('f-dte').value);
+  var minScore=parseInt(document.getElementById('f-score').value);
+  var maxDelta=parseInt(document.getElementById('f-delta').value)/100;
+  var filtered=allData.filter(function(o){var ok=!strat||(o.strategy&&o.strategy.indexOf(strat)>=0);return ok&&o.dte<=maxDte&&o.score>=minScore&&o.delta<=maxDelta;});
+  filtered.sort(function(a,b){return b.score-a.score;});
+  document.getElementById('table-count').textContent=filtered.length+' oportunidad'+(filtered.length!==1?'es':'');
+  window._filtered=filtered;
+  if(filtered.length===0){document.getElementById('tbl-body').innerHTML='';document.getElementById('empty-state').style.display='';return;}
   document.getElementById('empty-state').style.display='none';
-
   var rows='';
-  for(var i=0;i<filtered.length;i++) {
-    var o=filtered[i], s=o.score, sc=scoreColor(s), tb=typeBadge(o.type||o.strategy);
+  for(var i=0;i<filtered.length;i++){
+    var o=filtered[i],s=o.score,sc=scoreColor(s),tb=typeBadge(o.type||o.strategy);
     rows+='<tr onclick="selectRow('+i+',this)">'+
       '<td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:'+s+'%;background:'+sc+'"></div></div><span class="score-num" style="color:'+sc+'">'+Math.round(s)+'</span></div></td>'+
       '<td style="font-weight:700">'+o.ticker+'</td>'+
@@ -235,33 +369,151 @@ function renderTable() {
   document.getElementById('tbl-body').innerHTML=rows;
 }
 
-function selectRow(i, row) {
+function selectRow(i,row) {
   document.querySelectorAll('tbody tr').forEach(function(r){r.classList.remove('selected');});
   row.classList.add('selected');
-  var o=window._filtered[i];
-  if(!o) return;
+  var o=window._filtered[i];if(!o)return;
   var prob=Math.round((1-o.delta)*100);
   var ret=o.capital_req>0?(o.max_profit/o.capital_req*100).toFixed(2)+'%':'—';
-  var fields=[
-    ['Prima cobrada','$'+Number(o.premium).toFixed(2)],
-    ['Prob. OTM',prob+'%'],
-    ['Breakeven','$'+Number(o.breakeven).toFixed(2)],
-    ['Capital req.','$'+Number(o.capital_req).toLocaleString()],
-    ['Retorno',ret],
-    ['Riesgo',o.risk_level||'—'],
-    ['IV actual',(o.iv||'—')+'%'],
-    ['IV Rank',Math.round(o.iv_rank)+'%'],
-    ['Volumen',Number(o.volume).toLocaleString()],
-    ['Open Interest',Number(o.open_interest).toLocaleString()],
-  ];
+  var fields=[['Prima cobrada','$'+Number(o.premium).toFixed(2)],['Prob. OTM',prob+'%'],['Breakeven','$'+Number(o.breakeven).toFixed(2)],['Capital req.','$'+Number(o.capital_req).toLocaleString()],['Retorno',ret],['Riesgo',o.risk_level||'—'],['IV actual',(o.iv||'—')+'%'],['IV Rank',Math.round(o.iv_rank)+'%'],['Volumen',Number(o.volume).toLocaleString()],['Open Interest',Number(o.open_interest).toLocaleString()]];
   var html='<div style="font-size:13px;font-weight:700;margin-bottom:8px">'+o.ticker+' · '+(o.strategy||'')+'</div>';
   html+='<div style="font-size:10px;color:var(--muted);margin-bottom:10px">$'+o.strike+' · '+o.expiry+' · '+o.dte+'DTE</div>';
-  fields.forEach(function(f){ html+='<div class="detail-row"><span class="detail-lbl">'+f[0]+'</span><span class="detail-val">'+f[1]+'</span></div>'; });
+  fields.forEach(function(f){html+='<div class="detail-row"><span class="detail-lbl">'+f[0]+'</span><span class="detail-val">'+f[1]+'</span></div>';});
   html+='<div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.8"><span style="color:var(--green)">✓ Cerrar</span> al 50%: $'+(o.premium*0.5).toFixed(2)+'<br><span style="color:var(--red)">✗ Stop</span> al 200%: $'+(o.premium*2).toFixed(2)+'</div>';
   document.getElementById('detail-content').innerHTML=html;
 }
 
-setInterval(function(){ countdown--; document.getElementById('countdown').textContent=countdown+'s'; if(countdown<=0){fetchData();countdown=30;} },1000);
+// ---------------------------------------------------------------
+// PORTFOLIO OPTIMIZER
+// ---------------------------------------------------------------
+function updatePfLabels() {
+  var t=parseInt(document.getElementById('pf-target').value);
+  var m=parseInt(document.getElementById('pf-margin').value);
+  var d=parseInt(document.getElementById('pf-dte').value);
+  var dl=parseInt(document.getElementById('pf-delta').value);
+  var mp=parseInt(document.getElementById('pf-maxpos').value);
+  document.getElementById('pf-target-v').textContent='$'+t;
+  document.getElementById('pf-margin-v').textContent='$'+m.toLocaleString();
+  document.getElementById('pf-dte-v').textContent=d+'d';
+  document.getElementById('pf-delta-v').textContent='0.'+String(dl).padStart(2,'0');
+  document.getElementById('pf-maxpos-v').textContent=mp;
+}
+
+function optimizePortfolio() {
+  var targetPrem=parseInt(document.getElementById('pf-target').value);
+  var maxMargin=parseInt(document.getElementById('pf-margin').value);
+  var maxDte=parseInt(document.getElementById('pf-dte').value);
+  var maxDelta=parseInt(document.getElementById('pf-delta').value)/100;
+  var maxPos=parseInt(document.getElementById('pf-maxpos').value);
+  var priority=document.getElementById('pf-priority').value;
+
+  document.getElementById('pf-btn').disabled=true;
+  document.getElementById('pf-btn').textContent='Optimizando...';
+
+  setTimeout(function(){
+    var candidates=allData.filter(function(o){
+      return o.dte<=maxDte && o.delta<=maxDelta && o.premium>0 && (o.capital_req||o.strike*100)>0;
+    });
+
+    candidates.sort(function(a,b){
+      if(priority==='risk')   return a.delta-b.delta;
+      if(priority==='score')  return b.score-a.score;
+      if(priority==='return') return (b.max_profit/b.capital_req)-(a.max_profit/a.capital_req);
+      if(priority==='theta')  return b.theta-a.theta;
+      return a.delta-b.delta;
+    });
+
+    var portfolio=[], usedTickers={}, totalPrem=0, totalMargin=0;
+
+    for(var i=0;i<candidates.length;i++){
+      var o=candidates[i];
+      if(usedTickers[o.ticker]) continue;
+      var margin=o.capital_req||(o.strike*100);
+      if(totalMargin+margin>maxMargin) continue;
+      if(portfolio.length>=maxPos) break;
+      portfolio.push(o);
+      usedTickers[o.ticker]=true;
+      totalPrem+=o.premium;
+      totalMargin+=margin;
+      if(totalPrem>=targetPrem) break;
+    }
+
+    renderPortfolio(portfolio,totalPrem,totalMargin,targetPrem,maxMargin);
+    document.getElementById('pf-btn').disabled=false;
+    document.getElementById('pf-btn').textContent='Optimizar portfolio';
+  },100);
+}
+
+function renderPortfolio(portfolio,totalPrem,totalMargin,targetPrem,maxMargin){
+  document.getElementById('pf-empty').style.display='none';
+  document.getElementById('pf-results').style.display='block';
+
+  var retPct=totalMargin>0?(totalPrem/totalMargin*100).toFixed(2)+'%':'—';
+  var avgDelta=portfolio.length>0?(portfolio.reduce(function(s,o){return s+o.delta;},0)/portfolio.length).toFixed(3):'—';
+
+  document.getElementById('pf-r-prem').textContent='$'+totalPrem.toFixed(2);
+  document.getElementById('pf-r-margin').textContent='$'+Math.round(totalMargin).toLocaleString();
+  document.getElementById('pf-r-ret').textContent=retPct;
+  document.getElementById('pf-r-delta').textContent=avgDelta;
+  document.getElementById('pf-pos-count').textContent=portfolio.length+' posición'+(portfolio.length!==1?'es':'');
+
+  var premPct=Math.min(100,totalPrem/targetPrem*100);
+  var marginPct=Math.min(100,totalMargin/maxMargin*100);
+  document.getElementById('pf-prog-prem').style.width=premPct+'%';
+  document.getElementById('pf-prog-prem').style.background=totalPrem>=targetPrem?'var(--green)':'var(--amber)';
+  document.getElementById('pf-prog-margin').style.width=marginPct+'%';
+  document.getElementById('pf-prog-prem-txt').textContent='$'+totalPrem.toFixed(0)+' / $'+targetPrem;
+  document.getElementById('pf-prog-margin-txt').textContent='$'+Math.round(totalMargin).toLocaleString()+' / $'+maxMargin.toLocaleString();
+
+  var reached=totalPrem>=targetPrem;
+  var msg=reached?'✓ Objetivo alcanzado con '+portfolio.length+' posición'+(portfolio.length!==1?'es':''):'⚠ Objetivo parcial — faltan $'+(targetPrem-totalPrem).toFixed(0);
+  document.getElementById('pf-status-msg').textContent=msg;
+  document.getElementById('pf-status-msg').style.color=reached?'var(--green)':'var(--amber)';
+
+  var rows='';
+  for(var i=0;i<portfolio.length;i++){
+    var o=portfolio[i];
+    var tb=typeBadge(o.type||o.strategy);
+    var margin=o.capital_req||(o.strike*100);
+    var retPos=(o.premium/margin*100).toFixed(2);
+    var rCls=o.delta<=0.07?'risk-low':o.delta<=0.10?'risk-medium':'risk-high';
+    var rLbl=o.delta<=0.07?'Bajo':o.delta<=0.10?'Moderado':'Elevado';
+    rows+='<tr>'+
+      '<td style="color:var(--muted)">'+(i+1)+'</td>'+
+      '<td style="font-weight:700">'+o.ticker+'</td>'+
+      '<td><span class="badge '+tb[0]+'">'+tb[1]+'</span></td>'+
+      '<td style="color:var(--muted)">$'+o.strike+' · '+o.expiry+'</td>'+
+      '<td><span class="dte-chip '+dteCls(o.dte)+'">'+o.dte+'d</span></td>'+
+      '<td style="font-weight:700;color:var(--green)">$'+Number(o.premium).toFixed(2)+'</td>'+
+      '<td style="color:'+(o.delta<=0.08?'var(--green)':'var(--text)')+'">Δ'+o.delta.toFixed(3)+'</td>'+
+      '<td style="color:var(--amber)">$'+Math.round(margin).toLocaleString()+'</td>'+
+      '<td style="color:var(--accent)">'+retPos+'%</td>'+
+      '<td><div class="score-bar"><div class="score-track"><div class="score-fill" style="width:'+o.score+'%;background:'+scoreColor(o.score)+'"></div></div><span class="score-num" style="color:'+scoreColor(o.score)+'">'+Math.round(o.score)+'</span></div></td>'+
+      '<td><span class="badge '+rCls+'">'+rLbl+'</span></td>'+
+      '</tr>';
+  }
+  document.getElementById('pf-tbl-body').innerHTML=rows;
+
+  if(portfolio.length>0){
+    var minDte=Math.min.apply(null,portfolio.map(function(o){return o.dte;}));
+    var best=portfolio.reduce(function(a,b){return a.score>b.score?a:b;});
+    var note='<strong style="color:var(--text)">Gestión del portfolio:</strong><br>';
+    note+='✓ Cerrar cada posición cuando la prima baje al 50% (ganancia asegurada).<br>';
+    note+='✗ Stop loss si alguna prima se duplica — recomprar inmediatamente.<br>';
+    note+='⏱ Posición más próxima a vencer: '+minDte+' días — monitorizar primero.<br>';
+    note+='⭐ Mejor posición del portfolio: <strong style="color:var(--accent)">'+best.ticker+'</strong> (score '+Math.round(best.score)+').';
+    document.getElementById('pf-mgmt-note').innerHTML=note;
+  }
+}
+
+function renderChart(rows){
+  var ctx=document.getElementById('hist-chart').getContext('2d');
+  if(histChart){histChart.destroy();histChart=null;}
+  histChart=new Chart(ctx,{type:'bar',data:{labels:rows.map(function(h){return h.created_at?h.created_at.substring(11,16):''}),datasets:[{label:'Oportunidades',data:rows.map(function(h){return h.meta?h.meta.count||0:0}),backgroundColor:'rgba(6,182,212,.5)',borderColor:'#06b6d4',borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'#1c2230'}},y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'#1c2230'}}}}});
+}
+
+updatePfLabels();
+setInterval(function(){countdown--;document.getElementById('countdown').textContent=countdown+'s';if(countdown<=0){fetchData();countdown=30;}},1000);
 fetchData();
 </script>
 </body>
